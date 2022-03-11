@@ -5,7 +5,8 @@ const { Pool } = require("pg");
 const pool = new Pool({
   ssl: {
     rejectUnauthorized: true
-  }
+  },
+  connectionString: process.env.DATABASE_URL,
 });
 
 function retrieve(req, res) {
