@@ -60,4 +60,6 @@ function deleteData(event) {
     .then(getData)
     .catch((err) => console.error(err));
 }
+
+
 getData();
