@@ -4,6 +4,9 @@ const { Pool } = require("pg");
 
 const pool = new Pool({
   database: "express",
+  ssl: {
+    rejectUnauthorized: true
+  }
 });
 
 function retrieve(req, res) {
