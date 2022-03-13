@@ -31,7 +31,7 @@ function buildCards(arr) {
 const submitBtn = document.getElementById("submit");
 submitBtn.addEventListener("click", submitData);
 
-function submitData(event) {
+function submitData() {
   const userData = {};
   userData.name = document.getElementById("name").value;
   userData.age = document.getElementById("age").value;
@@ -60,6 +60,5 @@ function deleteData(event) {
     .then(getData)
     .catch((err) => console.error(err));
 }
-
 
 getData();

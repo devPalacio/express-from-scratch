@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const express = require("express");
 const morgan = require("morgan");
-const routes = require('./routes')
+const routes = require("./routes");
 
 const PORT = process.env.PORT ?? 8000;
 
@@ -16,12 +16,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/api", routes.retrieve);
+
 app.post("/api", routes.post);
-app.delete("/api", routes.remove)
-app.post('/random', routes.random) 
+app.delete("/api", routes.remove);
+app.post("/random", routes.random);
 
 app.listen(PORT, () => {
   console.info(`Listening on port ${PORT}`);
 });
-
-

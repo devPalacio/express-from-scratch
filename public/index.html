@@ -1,32 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Express from Scratch</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
+    <script defer src="app.js"></script>
+  </head>
 
-<head>
-  <title>Express from Scratch</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
-  <script defer src="app.js"></script>
-</head>
+  <body>
+    <header>
+      <h1>Fake identify generator</h1>
+    </header>
 
-<body>
-  <header>
-    <h1>List of names from Postgres</h1>
-  </header>
-
-  <main>
-    <section></section>
-    <form onclick="event.preventDefault()">
-      <header>
-        <h2>Add name to the db</h2>
-      </header>
-      <label for="name">Name:</label>
-      <input required type="text" id="name" maxlength="25" name="name" size="20" placeholder="Name" />
-      <label for="age">Age:</label>
-      <input required type="number" min="1" id="age" name="age" size="20" placeholder="Age" />
-      <button id="submit" type="submit">Submit</button>
-    </form>
-  </main>
-</body>
-
+    <main>
+      <form onclick="event.preventDefault()">
+        <header>
+          <h2>Add name to the db</h2>
+        </header>
+        <label for="name">Name:</label>
+        <input
+          required
+          type="text"
+          id="name"
+          maxlength="25"
+          name="name"
+          size="20"
+          placeholder="Name"
+        />
+        <label for="age">Age:</label>
+        <input
+          required
+          type="number"
+          min="1"
+          id="age"
+          name="age"
+          size="20"
+          placeholder="Age"
+        />
+        <button id="submit" type="submit">Submit</button>
+      </form>
+      <section></section>
+    </main>
+  </body>
 </html>
