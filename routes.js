@@ -50,13 +50,21 @@ const random = (req, res) => {
   //create a loop and generate fake data for number received from request
   const fakeData = [];
   for (let i = 0; i < req.body.num; i++) {
-    let fakeUnit = [];
-    fakeUnit.push(faker.name.findName());
-    fakeUnit.push(faker.datatype.number(110));
+    const fakeUnit = [];
+    const first = faker.name.firstName();
+    const last = faker.name.lastName();
+    fakeUnit.push(first);
+    fakeUnit.push(last);
+    fakeUnit.push(faker.phone.phoneNumber("###-###-####"));
+    fakeUnit.push(faker.internet.email(first, last));
+    fakeUnit.push(faker.datatype.number(80));
     fakeData.push(fakeUnit);
   }
   console.log(fakeData);
-  const sql = format("INSERT INTO express (name, age) VALUES %L", fakeData);
+  const sql = format(
+    "INSERT INTO express (name, phone, social, zip, age, avatar) VALUES %L",
+    fakeData
+  );
   pool.query(sql).then((result) => res.json(result));
 };
 

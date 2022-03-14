@@ -2,12 +2,12 @@ DROP TABLE IF EXISTS express;
 
 CREATE TABLE express (
   id SERIAL PRIMARY KEY,
-  name TEXT NOT NULL,
-  age INTEGER NOT NULL
+  firstname TEXT NOT NULL,
+  lastname TEXT NOT NULL,
+  phone text NOT NULL,
+  email text NOT NULL,
+  zip INTEGER NOT NULL,
+  age INTEGER NOT NULL,
+  avatar text NOT NULL,
 );
-
-INSERT INTO express (name, age) 
-VALUES
-  ('Jay', 33),
-  ('Haley', 28);
 
