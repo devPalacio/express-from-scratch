@@ -7,17 +7,20 @@ function getData() {
 }
 
 function buildCards(arr) {
+  const displayed = arr.length;
+  const total = arr.length;
+  const recordCounter = document.getElementById("record-count");
+  recordCounter.innerHTML = "";
+  recordCounter.innerHTML = `Displaying <strong> ${displayed} </strong> of <strong> ${total}</strong> records`;
   let section = document.getElementsByTagName("section")[0];
   while (section.firstChild) {
     section.removeChild(section.firstChild);
   }
   for (let card in arr) {
     const cardEle = document.createElement("aside");
-
     cardEle.innerHTML = `
-      <div>ID: ${arr[card].id}</div>
-      <div>NAME: ${arr[card].name}</div>
-      <div>AGE: ${arr[card].age}</div>
+      <div><strong>NAME:</strong>  ${arr[card].name}</div>
+      <div><strong>AGE:</strong>  ${arr[card].age}</div>
       <button class="delete" id="${arr[card].id}">Delete</button>
 `;
     section.append(cardEle);

@@ -11,6 +11,7 @@ const pool = new Pool({
   },
   connectionString: process.env.DATABASE_URL,
 });
+const sanitizeOpt = { allowedtags: [], allowedAtrributes: {} };
 
 function retrieve(req, res) {
   pool.query("SELECT * FROM express").then((result) => res.send(result.rows));
@@ -19,8 +20,8 @@ function retrieve(req, res) {
 const post = (req, res) => {
   pool
     .query("INSERT INTO express (name,age) VALUES ($1, $2) RETURNING *;", [
-      sanitizeHtml(req.body.name),
-      sanitizeHtml(req.body.age),
+      sanitizeHtml(req.body.name, sanitizeOpt),
+      sanitizeHtml(req.body.age, sanitizeOpt),
     ])
     .then((result) => res.json(result));
 };

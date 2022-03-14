@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+footer,
+header,
+main {
+  padding: 1rem 1rem;
+}
+form {
+  margin-top: 1rem;
+}
+.delete {
+  padding: 0.2rem;
+}
