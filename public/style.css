@@ -2,6 +2,11 @@
   display: flex;
   justify-content: space-around;
 }
+#info-panel {
+  display: flex;
+  justify-content: space-between;
+  /* width: 80vw; */
+}
 footer,
 header,
 main {
@@ -10,6 +15,7 @@ main {
 form {
   margin-top: 1rem;
 }
-.delete {
+.delete,
+.nav {
   padding: 0.2rem;
 }

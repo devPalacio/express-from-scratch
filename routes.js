@@ -14,22 +14,36 @@ const pool = new Pool({
 const sanitizeOpt = { allowedtags: [], allowedAtrributes: {} };
 
 function retrieve(req, res) {
-  pool.query("SELECT * FROM express").then((result) => res.send(result.rows));
+  pool
+    .query("SELECT * FROM express OFFSET $1 LIMIT $2", [
+      req.query.offset,
+      req.query.limit,
+    ])
+    .then((result) => {
+      console.log(result);
+      res.send(result.rows);
+    });
 }
 
 const post = (req, res) => {
   pool
-    .query("INSERT INTO express (name,age) VALUES ($1, $2) RETURNING *;", [
-      sanitizeHtml(req.body.name, sanitizeOpt),
-      sanitizeHtml(req.body.age, sanitizeOpt),
-    ])
+    .query(
+      `INSERT INTO express (name,age) 
+        VALUES ($1, $2) 
+        RETURNING *;`,
+      [
+        sanitizeHtml(req.body.name, sanitizeOpt),
+        sanitizeHtml(req.body.age, sanitizeOpt),
+      ]
+    )
     .then((result) => res.json(result));
 };
 
 const remove = (req, res) => {
   pool
     .query("DELETE FROM express WHERE id = $1 RETURNING *", [req.body.id])
-    .then((result) => res.json(result));
+    .then((result) => res.json(result))
+    .catch((err) => console.log(err));
 };
 
 const random = (req, res) => {
@@ -46,4 +60,11 @@ const random = (req, res) => {
   pool.query(sql).then((result) => res.json(result));
 };
 
-module.exports = { random, remove, post, retrieve };
+const count = (req, res) => {
+  pool.query("SELECT count(name) FROM express").then((result) => {
+    console.log(result);
+    res.send(result.rows);
+  });
+};
+
+module.exports = { count, random, remove, post, retrieve };

@@ -1,17 +1,32 @@
 "use strict";
-
-function getData() {
-  fetch("/api")
+let pageNum = 1;
+let limit = 8;
+let totalRecords;
+function getData(offset = 0, limit = 8) {
+  fetch(`/api?offset=${offset}&limit=${limit}`)
     .then((res) => res.json())
-    .then((data) => buildCards(data));
+    .then((data) => {
+      buildCards(data);
+      updateCount();
+    });
+}
+
+function updateCount() {
+  fetch("/count")
+    .then((res) => res.json())
+    .then((data) => {
+      totalRecords = parseInt(data[0].count);
+      const totalPages = Math.ceil(totalRecords / limit);
+      const recordCounter = document.getElementById("record-count");
+      recordCounter.innerHTML = "";
+      recordCounter.innerHTML = `Displaying <strong>${limit}</strong> of <strong>${totalRecords}</strong> records`;
+      const pageCounter = document.getElementById("page-count");
+      pageCounter.innerHTML = "";
+      pageCounter.innerHTML = `Page <strong>${pageNum}</strong> of <strong>${totalPages}</strong>`;
+    });
 }
 
 function buildCards(arr) {
-  const displayed = arr.length;
-  const total = arr.length;
-  const recordCounter = document.getElementById("record-count");
-  recordCounter.innerHTML = "";
-  recordCounter.innerHTML = `Displaying <strong> ${displayed} </strong> of <strong> ${total}</strong> records`;
   let section = document.getElementsByTagName("section")[0];
   while (section.firstChild) {
     section.removeChild(section.firstChild);
@@ -62,6 +77,24 @@ function deleteData(event) {
     .then((result) => console.log(result))
     .then(getData)
     .catch((err) => console.error(err));
+}
+
+const nextBtn = document.querySelector("#next");
+const prevBtn = document.querySelector("#prev");
+prevBtn.addEventListener("click", changePage);
+nextBtn.addEventListener("click", changePage);
+
+function changePage(e) {
+  if (e.target.id === "next" && (pageNum + 1) * limit < totalRecords + limit) {
+    let offset = pageNum * limit;
+    pageNum++;
+    getData(offset, limit);
+  }
+  if (e.target.id === "prev" && pageNum - 1 > 0) {
+    pageNum--;
+    let offset = (pageNum - 1) * limit;
+    getData(offset, limit);
+  }
 }
 
 getData();

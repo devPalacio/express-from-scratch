@@ -11,11 +11,18 @@
 
   <body>
     <header>
-      <h1>👀<h1>
+      <h1>👀</h1>
       <h1>Fake identity generator</h1>
     </header>
-    <div id="record-count"></div>
     <main>
+      <div id="info-panel">
+        <div id="record-count"></div>
+        <div id="page-count"></div>
+        <div id="controls">
+          <button class="nav" id="prev">Prev</button>
+          <button class="nav" id="next">Next</button>
+        </div>
+      </div>
       <div class="container">
         <form onclick="event.preventDefault()">
           <header>
