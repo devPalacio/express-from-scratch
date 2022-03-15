@@ -16,10 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/api", routes.retrieve);
-app.get("/count", routes.count);
-app.post("/api", routes.post);
 app.delete("/api", routes.remove);
 app.post("/random", routes.random);
+app.get("/count", routes.count);
 
 app.listen(PORT, () => {
   console.info(`Listening on port ${PORT}`);

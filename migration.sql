@@ -8,6 +8,6 @@ CREATE TABLE express (
   email text NOT NULL,
   zip INTEGER NOT NULL,
   age INTEGER NOT NULL,
-  avatar text NOT NULL,
+  avatar text NOT NULL
 );
 

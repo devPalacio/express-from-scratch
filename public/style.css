@@ -5,8 +5,9 @@
 #info-panel {
   display: flex;
   justify-content: space-between;
-  /* width: 80vw; */
+  width: 85vw;
 }
+
 footer,
 header,
 main {
@@ -18,4 +19,7 @@ form {
 .delete,
 .nav {
   padding: 0.2rem;
+}
+:root {
+  --width-content: 100%;
 }
