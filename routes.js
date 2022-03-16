@@ -13,7 +13,6 @@ const pool = new Pool({
 });
 // const sanitizeOpt = { allowedtags: [], allowedAtrributes: {} };
 const retrieve = (req, res) => {
-  console.log(req.query.fav, typeof req.query.fav);
   const query = JSON.parse(req.query.fav)
     ? format(
         "SELECT * FROM express WHERE favorite = true ORDER BY %I %s LIMIT %L OFFSET %L",
@@ -58,8 +57,11 @@ const random = async (req, res) => {
 };
 
 const count = (req, res) => {
+  const query = JSON.parse(req.query.fav)
+    ? "SELECT count(firstname) FROM express WHERE favorite = true"
+    : "SELECT count(firstname) FROM express";
   pool
-    .query("SELECT count(firstname) FROM express")
+    .query(query)
     .then((result) => {
       res.send(result.rows);
     })

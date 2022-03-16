@@ -8,14 +8,9 @@ let totalRecords;
 function getData(offset, limit) {
   /* eslint-disable */
   const order = submitForm[(name = "orderby")].value;
-  console.log(order);
   const sort = submitForm[(name = "sort")].value;
   const favs = submitForm[(name = "favs")].checked;
   /* eslint-enable */
-  if (favs && offset !== 0) {
-    offset = 0;
-    pageNum = 1;
-  }
   fetch(
     `/api?offset=${offset}&limit=${limit}&orderby=${order}&sort=${sort}&fav=${favs}`
   )
@@ -27,13 +22,21 @@ function getData(offset, limit) {
 }
 
 function updateCount() {
-  fetch("/count")
+  const favState = submitForm[(name = "favs")].checked;
+  fetch(`/count?fav=${favState}`)
     .then((res) => res.json())
     .then((data) => {
       let currCards = document.querySelector("section").children.length;
       totalRecords = parseInt(data[0].count);
       const totalPages = Math.ceil(totalRecords / limit);
       const recordCounter = document.getElementById("record-count");
+      if (totalPages < pageNum) {
+        offset = 0;
+        pageNum = 1;
+        getData(offset, limit);
+        return;
+      }
+
       recordCounter.innerHTML = "";
       recordCounter.innerHTML = `Displaying <strong>${currCards}</strong> of <strong>${totalRecords}</strong> records`;
       const pageCounter = document.getElementById("page-count");
