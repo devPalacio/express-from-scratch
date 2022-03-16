@@ -1,12 +1,16 @@
 "use strict";
+
 let pageNum = 1;
 let limit = 8;
 let offset = 0;
 let totalRecords;
 
 function getData(offset, limit) {
-  const order = submitForm[(name = "orderby")].value;
+  /* eslint-disable */
+  // const order = submitForm[(name = "orderby")].value;
+  const order = "firstname";
   const sort = submitForm[(name = "sort")].value;
+  /* eslint-enable */
   fetch(`/api?offset=${offset}&limit=${limit}&orderby=${order}&sort=${sort}`)
     .then((res) => res.json())
     .then((data) => {
@@ -40,12 +44,11 @@ function buildCards(arr) {
     const cardEle = document.createElement("aside");
     cardEle.innerHTML = `
       <img src='${arr[card].avatar}'>
-      <div><strong>NAME:</strong>  ${arr[card].firstname} ${arr[card].lastname}</div>
-      <div><strong>AGE:</strong>  ${arr[card].age}</div>
-      <div><strong>PHONE:</strong>  ${arr[card].phone}</div>
-      <div><strong>EMAIL:</strong>  ${arr[card].email}</div>
-      <div><strong>ZIP:</strong>  ${arr[card].zip}</div>
-      <button class="delete" id="${arr[card].id}">Delete</button>
+      <h3 class='name'><strong>${arr[card].firstname}</strong> </h3>
+      <div class="card-buttons">
+        <button class="delete" id="d${arr[card].id}">Delete</button>
+        <button class="favorite" id="f${arr[card].id}">Favorite</button>
+      </div>
 `;
     section.append(cardEle);
   }
@@ -64,13 +67,12 @@ function submitData(e) {
 
 function deleteData(event) {
   const userData = {};
-  userData.id = event.target.id;
+  userData.id = event.target.id.slice(1);
   fetch("/api", {
     method: "DELETE",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     body: JSON.stringify(userData),
   })
-    .then((result) => console.log(result))
     .then(() => getData(offset, limit))
     .catch((err) => console.error(err));
 }
@@ -97,11 +99,9 @@ const randomBtn = document.querySelector("#random");
 randomBtn.addEventListener("click", getRandom);
 
 function getRandom() {
-  console.log("click the random button mofo");
   fetch("/random", {
     method: "POST",
     headers: { "Content-Type": "application/json;charset=utf-8" },
-    body: JSON.stringify({ num: 20 }),
   })
     .then((result) => console.log(result))
     .then(() => getData(offset, limit))

@@ -16,6 +16,7 @@
     "morgan": "^1.10.0",
     "pg": "^8.7.3",
     "pg-format": "^1.0.4",
+    "random-animals-api": "^1.2.6",
     "sanitize-html": "^2.7.0"
   },
   "devDependencies": {
