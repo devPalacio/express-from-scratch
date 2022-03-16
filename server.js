@@ -19,6 +19,7 @@ app.get("/api", routes.retrieve);
 app.delete("/api", routes.remove);
 app.post("/random", routes.random);
 app.get("/count", routes.count);
+app.put("/favs", routes.favs);
 
 app.listen(PORT, () => {
   console.info(`Listening on port ${PORT}`);

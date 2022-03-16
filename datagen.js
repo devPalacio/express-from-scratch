@@ -2,7 +2,6 @@
 const animals = require("random-animals-api");
 const { faker } = require("@faker-js/faker");
 
-//have function take in animal? cat or dog.
 async function makeFake(animal) {
   const fakeData = [];
   for (let i = 0; i < 10; i++) {
@@ -18,7 +17,6 @@ async function makeFake(animal) {
     fakeUnit.push(false);
     fakeData.push(fakeUnit);
   }
-  // console.log(fakeData);
   return fakeData;
 }
 module.exports = { makeFake };

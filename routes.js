@@ -13,13 +13,23 @@ const pool = new Pool({
 });
 // const sanitizeOpt = { allowedtags: [], allowedAtrributes: {} };
 const retrieve = (req, res) => {
-  const query = format(
-    "SELECT * FROM express ORDER BY %I %s LIMIT %L OFFSET %L",
-    req.query.orderby,
-    req.query.sort,
-    req.query.limit,
-    req.query.offset
-  );
+  console.log(req.query.fav, typeof req.query.fav);
+  const query = JSON.parse(req.query.fav)
+    ? format(
+        "SELECT * FROM express WHERE favorite = true ORDER BY %I %s LIMIT %L OFFSET %L",
+        req.query.orderby,
+        req.query.sort,
+        req.query.limit,
+        req.query.offset
+      )
+    : format(
+        "SELECT * FROM express ORDER BY %I %s LIMIT %L OFFSET %L",
+        req.query.orderby,
+        req.query.sort,
+        req.query.limit,
+        req.query.offset
+      );
+
   pool
     .query(query)
     .then((result) => {
@@ -41,10 +51,9 @@ const random = async (req, res) => {
     "INSERT INTO express (firstname, avatar, favorite) VALUES %L",
     fakeData
   );
-  console.log(sql);
   pool
     .query(sql)
-    .then((result) => res.json(result))
+    .then((result) => res.json(result.rowCount))
     .catch((err) => console.error(err));
 };
 
@@ -57,4 +66,13 @@ const count = (req, res) => {
     .catch((err) => console.error(err));
 };
 
-module.exports = { count, random, remove, retrieve };
+const favs = (req, res) => {
+  pool
+    .query("UPDATE express SET favorite=true WHERE id = $1 RETURNING *", [
+      req.body.id,
+    ])
+    .then((result) => res.json(result.rows))
+    .catch((err) => console.error(err));
+};
+
+module.exports = { favs, count, random, remove, retrieve };
