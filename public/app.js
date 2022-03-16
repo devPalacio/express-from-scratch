@@ -12,6 +12,10 @@ function getData(offset, limit) {
   const sort = submitForm[(name = "sort")].value;
   const favs = submitForm[(name = "favs")].checked;
   /* eslint-enable */
+  if (favs && offset !== 0) {
+    offset = 0;
+    pageNum = 1;
+  }
   fetch(
     `/api?offset=${offset}&limit=${limit}&orderby=${order}&sort=${sort}&fav=${favs}`
   )

@@ -68,9 +68,10 @@ const count = (req, res) => {
 
 const favs = (req, res) => {
   pool
-    .query("UPDATE express SET favorite=true WHERE id = $1 RETURNING *", [
-      req.body.id,
-    ])
+    .query(
+      "UPDATE express SET favorite = NOT favorite WHERE id = $1 RETURNING *",
+      [req.body.id]
+    )
     .then((result) => res.json(result.rows))
     .catch((err) => console.error(err));
 };
