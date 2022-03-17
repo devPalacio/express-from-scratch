@@ -44,8 +44,8 @@ const remove = (req, res) => {
 };
 
 const random = async (req, res) => {
-  const animal = ["cat", "dog"];
-  const fakeData = await makeFake(animal[Math.round(Math.random())]);
+  const animal = ["cat", "dog", "panda"];
+  const fakeData = await makeFake(animal[Math.round(Math.random() * 2)]);
   const sql = format(
     "INSERT INTO express (firstname, avatar, favorite) VALUES %L",
     fakeData
