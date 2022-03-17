@@ -3,8 +3,9 @@ const animals = require("random-animals-api");
 const { faker } = require("@faker-js/faker");
 
 async function makeFake(animal) {
+  console.log(animal);
   const fakeData = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 5; i++) {
     const fakeUnit = [];
     const first = faker.name.firstName();
     fakeUnit.push(first);
@@ -13,6 +14,12 @@ async function makeFake(animal) {
     }
     if (animal === "dog") {
       await animals.dog().then((url) => fakeUnit.push(url));
+    }
+    if (animal === "panda") {
+      await animals.panda().then((url) => fakeUnit.push(url));
+    }
+    if (animal === "duck") {
+      await animals.duck().then((url) => fakeUnit.push(url));
     }
     fakeUnit.push(false);
     fakeData.push(fakeUnit);

@@ -30,7 +30,7 @@ function updateCount() {
       totalRecords = parseInt(data[0].count);
       const totalPages = Math.ceil(totalRecords / limit);
       const recordCounter = document.getElementById("record-count");
-      if (totalPages < pageNum) {
+      if (totalPages < pageNum && totalRecords > 0) {
         offset = 0;
         pageNum = 1;
         getData(offset, limit);
