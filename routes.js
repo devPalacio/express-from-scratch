@@ -3,7 +3,6 @@
 const { Pool } = require("pg");
 const format = require("pg-format");
 const { makeFake } = require("./datagen");
-// const sanitizeHtml = require("sanitize-html");
 
 const pool = new Pool({
   ssl: {
@@ -11,23 +10,23 @@ const pool = new Pool({
   },
   connectionString: process.env.DATABASE_URL,
 });
-// const sanitizeOpt = { allowedtags: [], allowedAtrributes: {} };
+
 const retrieve = (req, res) => {
   const query = JSON.parse(req.query.fav)
     ? format(
-        "SELECT * FROM express WHERE favorite = true ORDER BY %I %s LIMIT %L OFFSET %L",
-        req.query.orderby,
-        req.query.sort,
-        req.query.limit,
-        req.query.offset
-      )
+      "SELECT * FROM express WHERE favorite = true ORDER BY %I %s LIMIT %L OFFSET %L",
+      req.query.orderby,
+      req.query.sort,
+      req.query.limit,
+      req.query.offset
+    )
     : format(
-        "SELECT * FROM express ORDER BY %I %s LIMIT %L OFFSET %L",
-        req.query.orderby,
-        req.query.sort,
-        req.query.limit,
-        req.query.offset
-      );
+      "SELECT * FROM express ORDER BY %I %s LIMIT %L OFFSET %L",
+      req.query.orderby,
+      req.query.sort,
+      req.query.limit,
+      req.query.offset
+    );
 
   pool
     .query(query)
